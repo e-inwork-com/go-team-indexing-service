@@ -4,7 +4,7 @@
 Golang Team Indexing Microservice is indexing the data of [the Golang Team Microservice](https://github.com/e-inwork-com/go-team-service) in the [Solr](https://solr.apache.org) Search Platform.
 To creating a team data, it needs [the Golang User Microservice](https://github.com/e-inwork-com/go-user-service), and basically this microservice needs to run three microservice together in different the Docker container.
 
-And to run them, follow the steps below: 
+And to run them, follow the steps below:
 1. Install Docker
     - https://docs.docker.com/get-docker/
 2. Git clone this repository to your folder, and from the terminal run below command:
@@ -39,21 +39,21 @@ And to run them, follow the steps below:
    ```
    curl -F team_name="Doe's Team" -F team_picture=@/YourRootFolder/.../go-team-indexing-service/grpc/test/images/team.jpg -H "Authorization: Bearer $token"  -X POST http://localhost:8000/service/teams
    ```
-10. After successfully creating a team, the Golang Team Microservice will send a team data to the Golang Team Indexing Microservice via gPRC to indexing it in the Solr Search Platform. And the result can check on this link: http://localhost:8983/solr/#/teams/query?q=*:*&q.op=OR&indent=true&useParams=
+10. After successfully creating a team, the Golang Team Microservice will send a team data to the Golang Team Indexing Microservice via gRPC to indexing it in the Solr Search Platform. And the result can check on this link: http://localhost:8983/solr/#/teams/query?q=*:*&q.op=OR&indent=true&useParams=
 11. And to run the end to end testing, follow the below commands:
     ```
     # Down all the current container
     docker-compose -f docker-compose.yml down
-    
+
     # Run this command if something not working
     docker system prune -a
-    
-    # Install all module requirements, install Golang if not installed yet 
+
+    # Install all module requirements, install Golang if not installed yet
     go mod tidy
-    
+
     # Run Docker Compose for test, and wait Wait until the status of "curl-local" and "migrate-local" is "exited (0)"
-    docker-compose -f docker-compose.test.yml up -d 
-    
+    docker-compose -f docker-compose.test.yml up -d
+
     # Run the test
     go test -v ./grpc
     ```
