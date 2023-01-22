@@ -166,6 +166,7 @@ services:
       - "seccomp:unconfined"
     environment:
       - DBDSN=${DBDSN:-postgres://postgres:postgres@db-service:5432/postgres?sslmode=disable}
+      - AUTHSECRET=${AUTHSECRET:-secret}
     deploy:
       restart_policy:
         condition: on-failure
@@ -187,8 +188,9 @@ services:
       - ./local/test/uploads:/app/uploads
     environment:
       - DBDSN=${DBDSN:-postgres://postgres:postgres@db-service:5432/postgres?sslmode=disable}
+      - AUTHSECRET=${AUTHSECRET:-secret}
       - UPLOADS=${UPLOADS:-/app/uploads}
-      - GRPCTEAMS=${GRPCTEAMS:-host.docker.internal:5001}
+      - GRPCTEAM=${GRPCTEAM:-host.docker.internal:5001}
     deploy:
       restart_policy:
         condition: on-failure

@@ -166,6 +166,7 @@ services:
       - "seccomp:unconfined"
     environment:
       - DBDSN=${DBDSN:-postgres://postgres:postgres@db-service:5432/postgres?sslmode=disable}
+      - AUTHSECRET=${AUTHSECRET:-secret}
     deploy:
       restart_policy:
         condition: on-failure
@@ -182,6 +183,7 @@ services:
       - curl-local
     build:
       context: .
+      dockerfile: Dockerfile.local
     hostname: go-team-indexing-service
     networks:
       - network-local
@@ -216,8 +218,9 @@ services:
       - ./local/local/uploads:/app/uploads
     environment:
       - DBDSN=${DBDSN:-postgres://postgres:postgres@db-service:5432/postgres?sslmode=disable}
+      - AUTHSECRET=${AUTHSECRET:-secret}
       - UPLOADS=${UPLOADS:-/app/uploads}
-      - GRPCTEAMS=${GRPCTEAMS:-go-team-indexing-service:5001}
+      - GRPCTEAM=${GRPCTEAM:-go-team-indexing-service:5001}
     deploy:
       restart_policy:
         condition: on-failure
